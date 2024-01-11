@@ -6,6 +6,7 @@ import { RouterLink } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
 
 @Component({
+  styleUrls: ["./article-preview.component.css"],
   selector: "app-article-preview",
   templateUrl: "./article-preview.component.html",
   imports: [
