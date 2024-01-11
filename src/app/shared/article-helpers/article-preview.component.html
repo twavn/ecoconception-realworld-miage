@@ -9,10 +9,11 @@
     </app-favorite-button>
   </app-article-meta>
 
-  <a [routerLink]="['/article', article.slug]" class="preview-link">
+  <button (click)="toggleMessage()">afficher le message</button>
+  <div *ngIf="article.showDescription">
     <h1>{{ article.title }}</h1>
     <p>{{ article.description }}</p>
-    <span>Read more...</span>
+    <a [routerLink]="['/article', article.slug]">Read more...</a>
     <ul class="tag-list">
       <li
         class="tag-default tag-pill tag-outline"
@@ -21,5 +22,5 @@
         {{ tag }}
       </li>
     </ul>
-  </a>
+  </div>
 </div>

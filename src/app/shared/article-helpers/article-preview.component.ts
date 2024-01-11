@@ -1,18 +1,28 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Article } from "../../core/models/article.model";
 import { ArticleMetaComponent } from "./article-meta.component";
 import { FavoriteButtonComponent } from "../buttons/favorite-button.component";
 import { RouterLink } from "@angular/router";
-import { NgForOf } from "@angular/common";
+import { NgForOf, NgIf } from "@angular/common";
 
 @Component({
   selector: "app-article-preview",
   templateUrl: "./article-preview.component.html",
-  imports: [ArticleMetaComponent, FavoriteButtonComponent, RouterLink, NgForOf],
+  imports: [
+    ArticleMetaComponent,
+    FavoriteButtonComponent,
+    RouterLink,
+    NgForOf,
+    NgIf,
+  ],
   standalone: true,
 })
-export class ArticlePreviewComponent {
+export class ArticlePreviewComponent implements OnInit {
   @Input() article!: Article;
+
+  ngOnInit(): void {
+    this.article.showDescription = false;
+  }
 
   toggleFavorite(favorited: boolean): void {
     this.article.favorited = favorited;
@@ -22,5 +32,10 @@ export class ArticlePreviewComponent {
     } else {
       this.article.favoritesCount--;
     }
+  }
+
+  toggleMessage(): void {
+    console.log("click");
+    this.article.showDescription = !this.article.showDescription;
   }
 }
