@@ -5,8 +5,8 @@ import { Article } from "../../core/models/article.model";
 import { ArticlePreviewComponent } from "./article-preview.component";
 import { NgClass, NgForOf, NgIf } from "@angular/common";
 import { LoadingState } from "../../core/models/loading-state.model";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Observable, Subject } from "rxjs";
+import { switchMap, takeUntil, tap } from "rxjs/operators";
 
 @Component({
   selector: "app-article-list",
@@ -58,16 +58,28 @@ export class ArticleListComponent implements OnDestroy {
 
     this.articlesService
       .query(this.query)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        tap((data) => {
+          this.results = data.articles;
+          // Used from http://www.jstips.co/en/create-range-0...n-easily-using-one-line/
+          this.totalPages = Array.from(
+            new Array(Math.ceil(data.articlesCount / this.limit)),
+            (val, index) => index + 1
+          );
+        }),
+        switchMap((data) => {
+          const useLessObservable: Observable<Article>[] = [];
+          if (data.articles) {
+            data.articles.forEach((article: Article) => {
+              useLessObservable.push(this.articlesService.get(article.slug));
+            });
+          }
+          return useLessObservable;
+        }),
+        takeUntil(this.destroy$)
+      )
       .subscribe((data) => {
         this.loading = LoadingState.LOADED;
-        this.results = data.articles;
-
-        // Used from http://www.jstips.co/en/create-range-0...n-easily-using-one-line/
-        this.totalPages = Array.from(
-          new Array(Math.ceil(data.articlesCount / this.limit)),
-          (val, index) => index + 1
-        );
       });
   }
 }
