@@ -56,3 +56,8 @@
 .rotate-container p:hover {
   background-color: #2980b9;
 }
+
+.special-text {
+  font-family: "Lobster", cursive;
+  font-size: 2em;
+}

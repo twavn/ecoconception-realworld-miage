@@ -21,6 +21,7 @@ import { Errors } from "../../core/models/errors.model";
 import { Profile } from "../../core/models/profile.model";
 
 @Component({
+  styleUrls: ["./article.component.css"],
   selector: "app-article-page",
   templateUrl: "./article.component.html",
   imports: [
