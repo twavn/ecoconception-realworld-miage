@@ -12,7 +12,7 @@
   <button (click)="toggleMessage()">afficher le message</button>
   <div *ngIf="article.showDescription">
     <h1 class="message-title">{{ article.title }}</h1>
-    <p class="message-description">{{ article.description }}</p>
+    <p class="message-description petite-text">{{ article.description }}</p>
     <a [routerLink]="['/article', article.slug]">Read more...</a>
     <ul class="tag-list">
       <li
