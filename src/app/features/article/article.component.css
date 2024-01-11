@@ -2,3 +2,7 @@
   font-family: "Lobster", cursive;
   font-size: 2em;
 }
+
+.all-page {
+  background-image: url("/assets/image/flash.gif");
+}
